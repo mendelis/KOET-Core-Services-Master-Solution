@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "AuthService API",
+    "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
+    "description": "Authentication API with JWT, refresh tokens, roles, sessions, and Neo4j backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"YourSecurePassword123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "register"]
+        }
+      }
+    },
+    {
+      "name": "Confirm Email",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:5000/api/auth/confirm?token={{confirmation_token}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "confirm"],
+          "query": [{ "key": "token", "value": "{{confirmation_token}}" }]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"YourSecurePassword123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"token\": \"{{expired_jwt_token}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/refresh",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "refresh"]
+        }
+      }
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/auth/logout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "logout"]
+        }
+      }
+    },
+    {
+      "name": "Get Sessions",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/auth/sessions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "auth", "sessions"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "access_token", "value": "" },
+    { "key": "confirmation_token", "value": "" },
+    { "key": "expired_jwt_token", "value": "" }
+  ]
+}

@@ -1,0 +1,6 @@
+@KOET.Core.Services.Authentication_HostAddress = http://localhost:5083
+
+GET {{KOET.Core.Services.Authentication_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
