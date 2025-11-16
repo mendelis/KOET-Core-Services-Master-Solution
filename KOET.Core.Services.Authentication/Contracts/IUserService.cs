@@ -12,6 +12,6 @@ namespace KOET.Core.Services.Authentication.Contracts
         Task<bool> ChangePasswordAsync(string userId, ChangePasswordRequest request);
         Task<bool> RequestPasswordResetAsync(string email);
         Task<bool> SetNewPasswordAsync(SetNewPasswordRequest request);
-
+        Task<bool> UpdateProfileAsync(string userId, UpdateProfileRequest request);
     }
 }

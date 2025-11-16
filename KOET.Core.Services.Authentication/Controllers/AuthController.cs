@@ -72,5 +72,15 @@ namespace KOET.Core.Services.Authentication.Controllers
             var success = await _service.SetNewPasswordAsync(request);
             return success ? Ok("Password updated.") : BadRequest("Invalid or expired token.");
         }
+
+        [Authorize]
+        [HttpPost("update-profile")]
+        public async Task<IActionResult> UpdateProfile([FromForm] UpdateProfileRequest request)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var success = await _service.UpdateProfileAsync(userId, request);
+            return success ? Ok("Profile updated.") : BadRequest("Update failed.");
+        }
+
     }
 }

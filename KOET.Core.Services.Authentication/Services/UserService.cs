@@ -142,5 +142,30 @@ namespace KOET.Core.Services.Authentication.Services
             await _audit.LogAsync(user.Id, "SetNewPassword");
             return true;
         }
+
+        public async Task<bool> UpdateProfileAsync(string userId, UpdateProfileRequest request)
+        {
+            var user = await _repository.GetByIdAsync(userId);
+            if (user == null) return false;
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.BirthDate = request.BirthDate;
+
+            if (request.Photo != null)
+            {
+                var fileName = $"PROFILE_{userId}{Path.GetExtension(request.Photo.FileName)}";
+                var filePath = Path.Combine("wwwroot", "uploads", fileName);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await request.Photo.CopyToAsync(stream);
+
+                user.PhotoUrl = $"/uploads/{fileName}";
+            }
+
+            await _repository.UpdateAsync(user);
+            await _audit.LogAsync(user.Id, "UpdateProfile");
+            return true;
+        }
     }
 }
