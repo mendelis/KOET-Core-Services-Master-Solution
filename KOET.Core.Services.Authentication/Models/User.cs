@@ -11,5 +11,11 @@
         public string RefreshToken { get; set; }
         public DateTime RefreshTokenExpiry { get; set; }
         public List<string> RevokedTokens { get; set; } = new();
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string? PhotoUrl { get; set; }
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpiry { get; set; }
     }
 }
