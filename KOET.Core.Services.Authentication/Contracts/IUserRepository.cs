@@ -11,6 +11,6 @@ namespace KOET.Core.Services.Authentication.Contracts
         Task UpdateAsync(User user);
         Task RevokeTokenAsync(string userId, string token);
         Task<bool> IsTokenRevokedAsync(string userId, string token);
+        Task<User> GetByResetTokenAsync(string token);
     }
-
 }

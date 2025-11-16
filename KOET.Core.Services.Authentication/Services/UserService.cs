@@ -100,5 +100,47 @@ namespace KOET.Core.Services.Authentication.Services
             await _sessionService.EndSessionAsync(sessionId);
             return true;
         }
+
+        public async Task<bool> ChangePasswordAsync(string userId, ChangePasswordRequest request)
+        {
+            var user = await _repository.GetByIdAsync(userId);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.PasswordHash))
+                return false;
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            await _repository.UpdateAsync(user);
+            await _audit.LogAsync(user.Id, "ChangePassword");
+            return true;
+        }
+
+        public async Task<bool> RequestPasswordResetAsync(string email)
+        {
+            var user = await _repository.GetByEmailAsync(email);
+            if (user == null) return false;
+
+            user.ResetToken = Guid.NewGuid().ToString();
+            user.ResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+            await _repository.UpdateAsync(user);
+
+            var resetLink = $"https://yourdomain.com/reset-password?token={user.ResetToken}";
+            var body = $"Click to reset your password: {resetLink}";
+            await _emailSender.SendConfirmationEmail(user.Email, user.ResetToken); // reuse method or create new one
+            await _audit.LogAsync(user.Id, "RequestPasswordReset");
+            return true;
+        }
+
+        public async Task<bool> SetNewPasswordAsync(SetNewPasswordRequest request)
+        {
+            var user = await _repository.GetByResetTokenAsync(request.Token);
+            if (user == null || user.ResetTokenExpiry < DateTime.UtcNow)
+                return false;
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            user.ResetToken = null;
+            user.ResetTokenExpiry = null;
+            await _repository.UpdateAsync(user);
+            await _audit.LogAsync(user.Id, "SetNewPassword");
+            return true;
+        }
     }
 }

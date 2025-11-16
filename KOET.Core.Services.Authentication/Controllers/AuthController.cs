@@ -3,6 +3,7 @@ using KOET.Core.Services.Authentication.Messages;
 using KOET.Core.Services.Authentication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KOET.Core.Services.Authentication.Controllers
 {
@@ -47,6 +48,29 @@ namespace KOET.Core.Services.Authentication.Controllers
             if (sessionId == null) return BadRequest("Session ID missing.");
             await _service.LogoutAsync(sessionId);
             return Ok("Logged out.");
+        }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var success = await _service.ChangePasswordAsync(userId, request);
+            return success ? Ok("Password changed.") : BadRequest("Invalid current password.");
+        }
+
+        [HttpPost("request-reset")]
+        public async Task<IActionResult> RequestReset(ResetPasswordRequest request)
+        {
+            var success = await _service.RequestPasswordResetAsync(request.Email);
+            return success ? Ok("Reset link sent.") : NotFound("User not found.");
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(SetNewPasswordRequest request)
+        {
+            var success = await _service.SetNewPasswordAsync(request);
+            return success ? Ok("Password updated.") : BadRequest("Invalid or expired token.");
         }
     }
 }

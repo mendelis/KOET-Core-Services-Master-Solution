@@ -9,5 +9,9 @@ namespace KOET.Core.Services.Authentication.Contracts
         Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task<bool> ConfirmEmailAsync(string token);
         Task<bool> LogoutAsync(string sessionId);
+        Task<bool> ChangePasswordAsync(string userId, ChangePasswordRequest request);
+        Task<bool> RequestPasswordResetAsync(string email);
+        Task<bool> SetNewPasswordAsync(SetNewPasswordRequest request);
+
     }
 }

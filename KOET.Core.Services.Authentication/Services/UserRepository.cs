@@ -73,5 +73,14 @@ namespace KOET.Core.Services.Authentication.Services
             var user = await GetByIdAsync(userId);
             return user?.RevokedTokens?.Contains(token) ?? false;
         }
+
+        public async Task<User> GetByResetTokenAsync(string token)
+        {
+            return (await _client.Cypher
+                .Match("(u:User)")
+                .Where((User u) => u.ResetToken == token)
+                .Return(u => u.As<User>())
+                .ResultsAsync).FirstOrDefault();
+        }
     }
 }
