@@ -1,8 +1,8 @@
 {
   "info": {
     "name": "AuthService API",
-    "_postman_id": "authservice-collection",
-    "description": "Complete authentication API with JWT, refresh tokens, roles, sessions, profile, and password management.",
+    "_postman_id": "authservice-full-collection",
+    "description": "Complete API for authentication, profile, password, session, and role management using Neo4j and JWT.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -13,15 +13,9 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"YourSecurePassword123\"\n}"
+          "raw": "{ \"email\": \"user@example.com\", \"password\": \"YourSecurePassword123\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/register",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "register"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/register" }
       }
     },
     {
@@ -29,11 +23,7 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "http://localhost:5000/api/auth/confirm?token={{confirmation_token}}",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "confirm"],
+          "raw": "https://localhost:7261/api/auth/confirm?token={{confirmation_token}}",
           "query": [{ "key": "token", "value": "{{confirmation_token}}" }]
         }
       }
@@ -45,15 +35,9 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"YourSecurePassword123\"\n}"
+          "raw": "{ \"email\": \"user@example.com\", \"password\": \"YourSecurePassword123\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "login"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/login" }
       }
     },
     {
@@ -63,48 +47,25 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"token\": \"{{expired_jwt_token}}\"\n}"
+          "raw": "{ \"token\": \"{{expired_jwt_token}}\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/refresh",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "refresh"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/refresh" }
       }
     },
     {
       "name": "Logout",
       "request": {
         "method": "POST",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{access_token}}" },
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "url": {
-          "raw": "http://localhost:5000/api/auth/logout",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "logout"]
-        }
+        "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+        "url": { "raw": "https://localhost:7261/api/auth/logout" }
       }
     },
     {
       "name": "Get Sessions",
       "request": {
         "method": "GET",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{access_token}}" }
-        ],
-        "url": {
-          "raw": "http://localhost:5000/api/auth/sessions",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "sessions"]
-        }
+        "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+        "url": { "raw": "https://localhost:7261/api/auth/sessions" }
       }
     },
     {
@@ -117,15 +78,9 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"currentPassword\": \"YourSecurePassword123\",\n  \"newPassword\": \"NewSecurePassword456\"\n}"
+          "raw": "{ \"currentPassword\": \"YourSecurePassword123\", \"newPassword\": \"NewSecurePassword456\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/change-password",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "change-password"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/change-password" }
       }
     },
     {
@@ -135,15 +90,9 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"email\": \"user@example.com\"\n}"
+          "raw": "{ \"email\": \"user@example.com\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/request-reset",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "request-reset"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/request-reset" }
       }
     },
     {
@@ -153,24 +102,16 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"token\": \"{{reset_token}}\",\n  \"newPassword\": \"NewSecurePassword456\"\n}"
+          "raw": "{ \"token\": \"{{reset_token}}\", \"newPassword\": \"NewSecurePassword456\" }"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/reset-password",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "reset-password"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/reset-password" }
       }
     },
     {
       "name": "Update Profile",
       "request": {
         "method": "POST",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{access_token}}" }
-        ],
+        "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
         "body": {
           "mode": "formdata",
           "formdata": [
@@ -180,13 +121,97 @@
             { "key": "Photo", "type": "file", "src": "" }
           ]
         },
-        "url": {
-          "raw": "http://localhost:5000/api/auth/update-profile",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "auth", "update-profile"]
-        }
+        "url": { "raw": "https://localhost:7261/api/auth/update-profile" }
+      }
+    },
+    {
+      "name": "Create Role",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"Manager\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/create" }
+      }
+    },
+    {
+      "name": "Delete Role",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"name\": \"Manager\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/delete" }
+      }
+    },
+    {
+      "name": "Assign Role to User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"userId\": \"{{user_id}}\", \"roleName\": \"Manager\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/assign" }
+      }
+    },
+    {
+      "name": "Remove Role from User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"userId\": \"{{user_id}}\", \"roleName\": \"Manager\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/remove" }
+      }
+    },
+    {
+      "name": "Add Permission to Role",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"roleName\": \"Manager\", \"permissionName\": \"EditUsers\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/add-permission" }
+      }
+    },
+    {
+      "name": "Link Roles",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"sourceRole\": \"Manager\", \"targetRole\": \"User\" }"
+        },
+        "url": { "raw": "https://localhost:7261/api/role/link-role" }
       }
     }
   ],
@@ -194,6 +219,7 @@
     { "key": "access_token", "value": "" },
     { "key": "confirmation_token", "value": "" },
     { "key": "reset_token", "value": "" },
-    { "key": "expired_jwt_token", "value": "" }
+    { "key": "expired_jwt_token", "value": "" },
+    { "key": "user_id", "value": "" }
   ]
 }
