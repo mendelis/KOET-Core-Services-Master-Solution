@@ -12,6 +12,18 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevAllowLocalhost8081", policy =>
+    {
+        policy.WithOrigins("http://localhost:8081")    // frontend origin
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        // .AllowCredentials(); // don't enable with AllowAnyOrigin
+    });
+});
+
 ///JWT Configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -66,6 +78,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("DevAllowLocalhost8081");
 
 app.UseRouting();
 app.UseAuthentication();
