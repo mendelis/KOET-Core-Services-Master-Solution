@@ -9,7 +9,7 @@ namespace KOET.Core.Services.Authentication.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : ControllerBase, IAuthController
     {
         private readonly IUserService _service;
 

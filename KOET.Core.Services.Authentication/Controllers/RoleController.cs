@@ -7,7 +7,7 @@ namespace KOET.Core.Services.Authentication.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RoleController : ControllerBase
+    public class RoleController : ControllerBase, IRoleController
     {
         private readonly IRoleService _service;
 
