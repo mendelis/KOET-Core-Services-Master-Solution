@@ -60,7 +60,21 @@ namespace KOET.Core.Services.Authentication.Services
             await _repository.UpdateAsync(user);
             await _audit.LogAsync(user.Id, "Login", $"Session: {sessionId}");
 
-            return new AuthResponse { Token = token, RefreshToken = refresh, Message = "Login successful." };
+            return new AuthResponse
+            {
+                User = new BaseUser()
+                {
+                    Email = user.Email,
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Roles = user.Roles,
+                    PhotoUrl = user.PhotoUrl
+                },
+                Token = token,
+                RefreshToken = refresh,
+                Message = "Login successful."
+            };
         }
 
         public async Task<AuthResponse> RefreshTokenAsync(RefreshTokenRequest request)
