@@ -71,7 +71,7 @@ namespace KOET.Core.Services.Authentication.Services
                     Roles = user.Roles,
                     PhotoUrl = user.PhotoUrl
                 },
-                Token = token,
+                AccessToken = token,
                 RefreshToken = refresh,
                 Message = "Login successful."
             };
@@ -94,7 +94,7 @@ namespace KOET.Core.Services.Authentication.Services
             await _repository.UpdateAsync(user);
             await _audit.LogAsync(user.Id, "RefreshToken");
 
-            return new AuthResponse { Token = newJwt, RefreshToken = newRefresh, Message = "Token refreshed." };
+            return new AuthResponse { AccessToken = newJwt, RefreshToken = newRefresh, Message = "Token refreshed." };
         }
 
         public async Task<bool> ConfirmEmailAsync(string token)
