@@ -82,5 +82,10 @@ namespace KOET.Core.Services.Authentication.Services
                 .Return(u => u.As<User>())
                 .ResultsAsync).FirstOrDefault();
         }
+
+        public async Task<IEnumerable<BaseUser>> GetAllUsersAsync()
+        {
+            return (await _client.Cypher.Match("(u:User)").Return(u => u.As<User>()).ResultsAsync).ToList();
+        }
     }
 }

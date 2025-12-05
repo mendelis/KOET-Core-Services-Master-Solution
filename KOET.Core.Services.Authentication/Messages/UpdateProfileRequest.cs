@@ -5,6 +5,6 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
-        public IFormFile? Photo { get; set; } // Optional image upload
+        public IFormFile? Avatar { get; set; } // Optional image upload
     }
 }

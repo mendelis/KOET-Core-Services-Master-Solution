@@ -1,4 +1,6 @@
 ﻿using KOET.Core.Services.Authentication.Messages;
+using KOET.Core.Services.Authentication.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KOET.Core.Services.Authentication.Contracts
 {
@@ -13,5 +15,6 @@ namespace KOET.Core.Services.Authentication.Contracts
         Task<bool> RequestPasswordResetAsync(string email);
         Task<bool> SetNewPasswordAsync(SetNewPasswordRequest request);
         Task<bool> UpdateProfileAsync(string userId, UpdateProfileRequest request);
+        Task<IEnumerable<BaseUser>> GetAllUsersAsync();
     }
 }

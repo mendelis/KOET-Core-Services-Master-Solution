@@ -32,7 +32,9 @@ namespace KOET.Core.Services.Authentication.Services
             {
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                ConfirmationToken = Guid.NewGuid().ToString()
+                ConfirmationToken = Guid.NewGuid().ToString(),
+                FirstName= request.FirstName,
+                LastName= request.LastName
             };
 
             await _repository.CreateAsync(user);
@@ -166,13 +168,13 @@ namespace KOET.Core.Services.Authentication.Services
             user.LastName = request.LastName;
             user.BirthDate = request.BirthDate;
 
-            if (request.Photo != null)
+            if (request.Avatar != null)
             {
-                var fileName = $"PROFILE_{userId}{Path.GetExtension(request.Photo.FileName)}";
+                var fileName = $"PROFILE_{userId}{Path.GetExtension(request.Avatar.FileName)}";
                 var filePath = Path.Combine("wwwroot", "uploads", fileName);
 
                 using var stream = new FileStream(filePath, FileMode.Create);
-                await request.Photo.CopyToAsync(stream);
+                await request.Avatar.CopyToAsync(stream);
 
                 user.PhotoUrl = $"/uploads/{fileName}";
             }
@@ -180,6 +182,13 @@ namespace KOET.Core.Services.Authentication.Services
             await _repository.UpdateAsync(user);
             await _audit.LogAsync(user.Id, "UpdateProfile");
             return true;
+        }
+
+        public Task<IEnumerable<BaseUser>> GetAllUsersAsync()
+        {
+            var users =  _repository.GetAllUsersAsync();
+
+            return users;
         }
     }
 }
