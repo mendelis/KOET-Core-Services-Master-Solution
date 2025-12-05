@@ -75,5 +75,10 @@ namespace KOET.Core.Services.Authentication.Services
                 .ExecuteWithoutResultsAsync();
             return true;
         }
+
+        public async Task<IEnumerable<Role>> GetAllRolesAsync()
+        {
+            return (await _client.Cypher.Match("(u:Role)").Return(u => u.As<Role>()).ResultsAsync).ToList();
+        }
     }
 }

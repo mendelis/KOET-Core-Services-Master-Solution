@@ -11,5 +11,6 @@ namespace KOET.Core.Services.Authentication.Contracts
         Task<IActionResult> Delete(CreateRoleRequest request);
         Task<IActionResult> LinkRole(RelatedRoleRequest request);
         Task<IActionResult> Remove(AssignRoleRequest request);
+        Task<IActionResult> GetAllRoles();
     }
 }

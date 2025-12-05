@@ -6,7 +6,7 @@ namespace KOET.Core.Services.Authentication.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : ControllerBase, IUsersController
     {
         private readonly IUserService _service;
 

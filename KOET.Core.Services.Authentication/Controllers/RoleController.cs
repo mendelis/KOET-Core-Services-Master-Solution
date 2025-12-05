@@ -26,7 +26,7 @@ namespace KOET.Core.Services.Authentication.Controllers
         public async Task<IActionResult> Delete(CreateRoleRequest request)
             => Ok(await _service.DeleteRoleAsync(request.Name));
 
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         [HttpPost("assign")]
         public async Task<IActionResult> Assign(AssignRoleRequest request)
             => Ok(await _service.AssignRoleToUserAsync(request.UserId, request.RoleName));
@@ -45,5 +45,13 @@ namespace KOET.Core.Services.Authentication.Controllers
         [HttpPost("link-role")]
         public async Task<IActionResult> LinkRole(RelatedRoleRequest request)
             => Ok(await _service.LinkRolesAsync(request.SourceRole, request.TargetRole));
+
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var roles = await _service.GetAllRolesAsync();
+
+            return Ok(roles);
+        }
     }
 }
