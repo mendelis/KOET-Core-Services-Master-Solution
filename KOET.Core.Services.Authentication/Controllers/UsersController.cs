@@ -15,8 +15,7 @@ namespace KOET.Core.Services.Authentication.Controllers
             _service = service;
         }
 
-        //[Authorize(Roles = "Admin")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
         {

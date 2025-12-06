@@ -46,6 +46,7 @@ namespace KOET.Core.Services.Authentication.Controllers
         public async Task<IActionResult> LinkRole(RelatedRoleRequest request)
             => Ok(await _service.LinkRolesAsync(request.SourceRole, request.TargetRole));
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("roles")]
         public async Task<IActionResult> GetAllRoles()
         {
